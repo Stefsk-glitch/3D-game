@@ -29,6 +29,7 @@
 *.out
 *.app
 
+x64/
 .vs/
 Debug/
 *.user
