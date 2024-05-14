@@ -16,7 +16,7 @@ GLFWwindow* window;
 cam* camera;
 
 void init();
-void update();
+void update(float deltaTime);
 void draw();
 std::vector<Vertex> buildCube(const glm::vec3& p, const glm::vec3& s, const glm::vec4& color);
 
@@ -37,9 +37,15 @@ int main(void)
 	tigl::init();
 	init();
 
+	float lastTime = (float)glfwGetTime();
+
 	while (!glfwWindowShouldClose(window))
 	{
-		update();
+		float currentTime = (float)glfwGetTime();
+		float deltaTime = currentTime - lastTime;
+		lastTime = currentTime;
+
+		update(deltaTime);
 		draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -64,9 +70,9 @@ void init()
 }
 
 
-void update()
+void update(float deltaTime)
 {
-	camera->update(window);
+	camera->update(window, deltaTime);
 }
 
 void draw()

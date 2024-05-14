@@ -22,13 +22,14 @@ glm::mat4 cam::getMatrix()
 	return ret;
 }
 
-void cam::move(float angle, float fac)
-{
-	position.x += (float)cos(rotation.y + glm::radians(angle)) * fac;
-	position.z += (float)sin(rotation.y + glm::radians(angle)) * fac;
+void cam::move(float angle, float fac, float deltaTime) {
+	float velocity = fac * deltaTime;
+
+	position.x += (float)cos(rotation.y + glm::radians(angle)) * velocity;
+	position.z += (float)sin(rotation.y + glm::radians(angle)) * velocity;
 }
 
-void cam::update(GLFWwindow* window)
+void cam::update(GLFWwindow* window, float deltaTime)
 {
 	double x, y;
 	glfwGetCursorPos(window, &x, &y);
@@ -43,11 +44,11 @@ void cam::update(GLFWwindow* window)
 	lastY = y;
 
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		move(0, 0.001f);
+		move(0, 5.0f, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		move(180, 0.001f);
+		move(180, 5.0f, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		move(90, 0.001f);
+		move(90, 5.0f, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		move(-90, 0.001f);
+		move(-90, 5.0f, deltaTime);
 }
