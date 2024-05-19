@@ -132,10 +132,15 @@
   <ItemGroup>
     <ClCompile Include="cam.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectModel.cpp" />
+    <ClCompile Include="Texure.cpp" />
     <ClCompile Include="tigl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cam.h" />
+    <ClInclude Include="objectModel.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="tigl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
