@@ -53,5 +53,8 @@ public:
 	ObjModel(const std::string& filename);
 	~ObjModel(void);
 
+	glm::vec3 position; // New position attribute
+	float rotationAngle; // New rotation attribute
+
 	void draw();
 };

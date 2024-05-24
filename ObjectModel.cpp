@@ -77,7 +77,7 @@ static inline std::string cleanLine(std::string line)
 /**
 * Loads an object model
 */
-ObjModel::ObjModel(const std::string& fileName)
+ObjModel::ObjModel(const std::string& fileName) : position(0.0f, 0.0f, 0.0f), rotationAngle(0.0f)
 {
 	std::cout << "Loading " << fileName << std::endl;
 	std::string dirName = fileName;
@@ -175,28 +175,26 @@ ObjModel::~ObjModel(void)
 {
 }
 
-void ObjModel::draw()
-{
-	const float scale = 0.1;
+void ObjModel::draw() {
+	const float scale = 0.1f;
 	glm::mat4 scaling = glm::scale(glm::mat4(1.0f), glm::vec3(scale, scale, scale));
+	glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
+	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngle), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around y-axis
 
-	for (auto& group : groups)
-	{
-		materials[group->materialIndex]->texture->bind();
+	for (auto& group : groups) {
+		if (group->materialIndex >= 0) {
+			materials[group->materialIndex]->texture->bind();
+		}
 		tigl::shader->enableTexture(true);
 		tigl::begin(GL_TRIANGLES);
-		for (auto& face : group->faces)
-		{
-			for (auto& vertex : face.vertices)
-			{
-				glm::vec3 scaledPosition = glm::vec3(scaling * glm::vec4(vertices[vertex.position], 1.0f));
-				tigl::addVertex(tigl::Vertex::PTN(scaledPosition, texcoords[vertex.texcoord], normals[vertex.normal]));
+		for (auto& face : group->faces) {
+			for (auto& vertex : face.vertices) {
+				glm::vec3 transformedPosition = glm::vec3(translation * rotation * scaling * glm::vec4(vertices[vertex.position], 1.0f));
+				tigl::addVertex(tigl::Vertex::PTN(transformedPosition, texcoords[vertex.texcoord], normals[vertex.normal]));
 			}
 		}
-
 		tigl::end();
 	}
-
 }
 
 void ObjModel::loadMaterialFile(const std::string& fileName, const std::string& dirName)

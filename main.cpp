@@ -74,6 +74,12 @@ void init()
 void update(float deltaTime)
 {
 	camera->update(window, deltaTime);
+
+	model->position.x += 5 * deltaTime;
+
+	model->rotationAngle += 45.0f * deltaTime; // 45 degrees per second
+	if (model->rotationAngle > 360.0f)
+		model->rotationAngle -= 360.0f;
 }
 
 void draw()
