@@ -117,6 +117,7 @@ void draw()
 
 	tigl::begin(GL_TRIANGLES);
 
+	// Drawing the square
 	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
 	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
 	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
@@ -125,7 +126,23 @@ void draw()
 	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
 	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
 
-	tigl::end();
+	// Drawing the circle
+	float pixelOffset = 0.01f; 
+	glm::vec4 center = modelMatrix * glm::vec4(0, -1 + pixelOffset, 0, 1);
+	float radius = 5.0f; 
+	int numVertices = 20; 
 
-	
+	for (int i = 0; i < numVertices; ++i) {
+		float theta1 = (2.0f * glm::pi<float>() * i) / numVertices;
+		float theta2 = (2.0f * glm::pi<float>() * (i + 1)) / numVertices;
+
+		glm::vec4 p1 = center + glm::vec4(radius * cos(theta1), 0, radius * sin(theta1), 0);
+		glm::vec4 p2 = center + glm::vec4(radius * cos(theta2), 0, radius * sin(theta2), 0);
+
+		tigl::addVertex(Vertex::PC(center, glm::vec4(1, 0, 0, 1))); 
+		tigl::addVertex(Vertex::PC(p1, glm::vec4(1, 0, 0, 1))); 
+		tigl::addVertex(Vertex::PC(p2, glm::vec4(1, 0, 0, 1))); 
+	}
+
+	tigl::end();
 }
