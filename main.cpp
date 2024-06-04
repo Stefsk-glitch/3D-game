@@ -102,11 +102,30 @@ void draw()
 	tigl::shader->setLightAmbient(0, glm::vec3(0.2f, 0.2f, 0.2f));
 	tigl::shader->setLightDiffuse(0, glm::vec3(1.0f, 1.0f, 1.0f));
 	tigl::shader->setLightSpecular(0, glm::vec3(1.0f, 1.0f, 1.0f));
-	tigl::shader->setLightPosition(0, glm::vec3(10, 10, 10));
+	tigl::shader->setLightPosition(0, glm::vec3(25, 25, 25));
 	tigl::shader->setShinyness(100);
 	tigl::shader->enableFog(false);
 
 	glEnable(GL_DEPTH_TEST);
 
+	tigl::shader->enableTexture(true);
 	model->draw();
+	tigl::shader->enableTexture(false);
+
+	glm::mat4 modelMatrix = glm::mat4(1.0f);
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 20.0f, -10.0f));
+
+	tigl::begin(GL_TRIANGLES);
+
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
+
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
+
+	tigl::end();
+
+	
 }

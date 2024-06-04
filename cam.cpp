@@ -6,7 +6,7 @@
 cam::cam(GLFWwindow* window)
 {
 	position = glm::vec3(0.0f, -20.0f, 10.0f);
-	rotation = glm::vec2(20, -10);
+	rotation = glm::vec2(0, 0);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

@@ -12,8 +12,8 @@ public:
 	void update(GLFWwindow* window, float deltaTime);
 
 private:
-	glm::vec3 position = glm::vec3(0, -20, 10);
-	glm::vec2 rotation = glm::vec2(20, -10);
+	glm::vec3 position;
+	glm::vec2 rotation;
 
 	void move(float angle, float fac, float deltaTime);
 };

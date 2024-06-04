@@ -6,6 +6,7 @@
 #include "tigl.h"
 #include "texture.h"
 #include "objectModel.h"
+#include "shape.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 using tigl::Vertex;
@@ -185,7 +186,6 @@ void ObjModel::draw() {
 		if (group->materialIndex >= 0) {
 			materials[group->materialIndex]->texture->bind();
 		}
-		tigl::shader->enableTexture(true);
 		tigl::begin(GL_TRIANGLES);
 		for (auto& face : group->faces) {
 			for (auto& vertex : face.vertices) {
