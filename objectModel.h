@@ -55,11 +55,11 @@ public:
 	ObjModel(const std::string& filename);
 	~ObjModel(void);
 
-	
-
 	std::vector<tigl::Vertex> verticesToDraw;
+
 	glm::vec3 position; 
-	float rotationAngle;
+	float rotationAngleY;
+	float rotationAngleX;
 
 	virtual void update() override;
 	void draw();
