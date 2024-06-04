@@ -87,17 +87,17 @@ void update(float deltaTime)
 		shape->update();
 	}
 
-	//model->position.x += 5 * deltaTime;
+	model->position.x += 5 * deltaTime;
 
 	//model->rotationAngleY += 45.0f * deltaTime; // 45 degrees per second on y-axis
 	//if (model->rotationAngleY > 360.0f)
 	//	model->rotationAngleY -= 360.0f;
 
-	//model->rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
-	//if (model->rotationAngleX > 360.0f)
-	//	model->rotationAngleX -= 360.0f;
+	model->rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
+	if (model->rotationAngleX > 360.0f)
+		model->rotationAngleX -= 360.0f;
 
-	model->rotationAngleX = 280;
+	//model->rotationAngleX = 280;
 }
 
 void draw()

@@ -181,29 +181,31 @@ ObjModel::~ObjModel(void)
 }
 
 void ObjModel::draw() {
-	const float scale = 0.025f;
-	glm::mat4 scaling = glm::scale(glm::mat4(1.0f), glm::vec3(scale, scale, scale));
-	glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
-	glm::mat4 rotationY = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 rotationX = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
-	glm::mat4 rotation = rotationX * rotationY;
+    const float scale = 0.025f;
+    glm::mat4 scaling = glm::scale(glm::mat4(1.0f), glm::vec3(scale, scale, scale));
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
+    glm::mat4 rotationY = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 rotationX = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
+    glm::mat4 rotation = rotationX * rotationY;
 
-	verticesToDraw.clear();
+    glm::mat4 modelMatrix = translation * rotation * scaling;
 
-	for (auto& group : groups) {
-		if (group->materialIndex >= 0) {
-			materials[group->materialIndex]->texture->bind();
-		}
-		for (auto& face : group->faces) {
-			for (auto& vertex : face.vertices) {
-				glm::vec3 transformedPosition = glm::vec3(translation * rotation * scaling * glm::vec4(vertices[vertex.position], 1.0f));
-				auto v = tigl::Vertex::PTN(transformedPosition, texcoords[vertex.texcoord], normals[vertex.normal]);
-				verticesToDraw.push_back(v);
-			}
-		}
-	}
+    verticesToDraw.clear();
 
-	tigl::drawVertices(GL_TRIANGLES, verticesToDraw);
+    for (auto& group : groups) {
+        /*if (group->materialIndex >= 0) {
+            materials[group->materialIndex]->texture->bind();
+        }*/
+        for (auto& face : group->faces) {
+            for (auto& vertex : face.vertices) {
+                glm::vec3 transformedPosition = glm::vec3(modelMatrix * glm::vec4(vertices[vertex.position], 1.0f));
+                auto v = tigl::Vertex::PTN(transformedPosition, texcoords[vertex.texcoord], normals[vertex.normal]);
+                verticesToDraw.push_back(v);
+            }
+        }
+    }
+
+    tigl::drawVertices(GL_TRIANGLES, verticesToDraw);
 }
 
 
