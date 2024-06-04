@@ -95,9 +95,9 @@ void draw()
 	tigl::shader->setViewMatrix(camera->getMatrix());
 	tigl::shader->setModelMatrix(glm::mat4(1.0f));
 
-	tigl::shader->enableColor(false);
+	tigl::shader->enableColor(true);
 	tigl::shader->enableLighting(true);
-	tigl::shader->enableColorMult(false);
+	tigl::shader->enableColorMult(true);
 	tigl::shader->setLightCount(1);
 	tigl::shader->setLightAmbient(0, glm::vec3(0.2f, 0.2f, 0.2f));
 	tigl::shader->setLightDiffuse(0, glm::vec3(1.0f, 1.0f, 1.0f));
