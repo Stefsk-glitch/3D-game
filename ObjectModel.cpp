@@ -182,19 +182,22 @@ void ObjModel::draw() {
 	glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngle), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around y-axis
 
-	for (auto& group : groups) {
-		if (group->materialIndex >= 0) {
-			materials[group->materialIndex]->texture->bind();
-		}
-		tigl::begin(GL_TRIANGLES);
-		for (auto& face : group->faces) {
-			for (auto& vertex : face.vertices) {
-				glm::vec3 transformedPosition = glm::vec3(translation * rotation * scaling * glm::vec4(vertices[vertex.position], 1.0f));
-				tigl::addVertex(tigl::Vertex::PTN(transformedPosition, texcoords[vertex.texcoord], normals[vertex.normal]));
+	if (verticesToDraw.size() == 0) {
+		for (auto& group : groups) {
+			if (group->materialIndex >= 0) {
+				materials[group->materialIndex]->texture->bind();
+			}
+			for (auto& face : group->faces) {
+				for (auto& vertex : face.vertices) {
+					glm::vec3 transformedPosition = glm::vec3(translation * rotation * scaling * glm::vec4(vertices[vertex.position], 1.0f));
+					auto v = tigl::Vertex::PTN(transformedPosition, texcoords[vertex.texcoord], normals[vertex.normal]);
+					verticesToDraw.push_back(v);
+				}
 			}
 		}
-		tigl::end();
 	}
+	
+	tigl::drawVertices(GL_TRIANGLES, verticesToDraw);
 }
 
 void ObjModel::loadMaterialFile(const std::string& fileName, const std::string& dirName)

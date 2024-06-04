@@ -68,18 +68,18 @@ void init()
 		});
 
 	camera = new cam(window);
-	model = new ObjModel("models/car/honda_jazz.obj");
+	model = new ObjModel("models/target/10480_Archery_target_v1_max2011_iteration-2.obj");
 }
 
 void update(float deltaTime)
 {
 	camera->update(window, deltaTime);
 
-	model->position.x += 5 * deltaTime;
+	//model->position.x += 5 * deltaTime;
 
-	model->rotationAngle += 45.0f * deltaTime; // 45 degrees per second
-	if (model->rotationAngle > 360.0f)
-		model->rotationAngle -= 360.0f;
+	//model->rotationAngle += 45.0f * deltaTime; // 45 degrees per second
+	//if (model->rotationAngle > 360.0f)
+	//	model->rotationAngle -= 360.0f;
 }
 
 void draw()
