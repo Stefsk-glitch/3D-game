@@ -1,5 +1,7 @@
 #pragma once
 
+#include "shape.h" 
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
@@ -9,7 +11,7 @@
 
 class Texture;
 
-class ObjModel
+class ObjModel : public Shape
 {
 private:
 	class Vertex
@@ -53,9 +55,12 @@ public:
 	ObjModel(const std::string& filename);
 	~ObjModel(void);
 
+	
+
 	std::vector<tigl::Vertex> verticesToDraw;
 	glm::vec3 position; 
 	float rotationAngle;
 
+	virtual void update() override;
 	void draw();
 };

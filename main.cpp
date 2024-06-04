@@ -1,5 +1,7 @@
 #include "tigl.h"
 #include "cam.h"
+#include "cube.h"
+#include "triangle.h"
 #include "objectModel.h"
 
 #include <iostream>
@@ -16,6 +18,8 @@ using tigl::Vertex;
 GLFWwindow* window;
 cam* camera;
 ObjModel* model;
+
+std::list<Shape*> shapes;
 
 void init();
 void update(float deltaTime);
@@ -68,12 +72,20 @@ void init()
 		});
 
 	camera = new cam(window);
+	
 	model = new ObjModel("models/target/10480_Archery_target_v1_max2011_iteration-2.obj");
+	shapes.push_back(model);
+	shapes.push_back(new Cube());
+	shapes.push_back(new Triangle());
 }
 
 void update(float deltaTime)
 {
 	camera->update(window, deltaTime);
+
+	for (auto &shape : shapes) {
+		shape->update();
+	}
 
 	//model->position.x += 5 * deltaTime;
 

@@ -75,6 +75,10 @@ static inline std::string cleanLine(std::string line)
 	return line;
 }
 
+void ObjModel::update() {
+	std::cout << "Hello obj model" << std::endl;
+}
+
 /**
 * Loads an object model
 */

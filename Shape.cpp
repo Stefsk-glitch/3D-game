@@ -1,4 +1,5 @@
-class Shape {
-public:
-    virtual void update() {  };
-};
+#include "shape.h"
+
+Shape::Shape() {
+
+}

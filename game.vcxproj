@@ -131,19 +131,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cam.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectModel.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Texure.cpp" />
     <ClCompile Include="tigl.cpp" />
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cam.h" />
+    <ClInclude Include="cube.h" />
     <ClInclude Include="objectModel.h" />
     <ClInclude Include="shape.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="tigl.h" />
+    <ClInclude Include="triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

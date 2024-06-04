@@ -1,5 +1,8 @@
 #pragma once
+
 class Shape {
 	public:
-		virtual void update();
+		Shape();
+
+		virtual void update() {};
 };
