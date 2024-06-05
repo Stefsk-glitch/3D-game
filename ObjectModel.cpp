@@ -177,23 +177,25 @@ ObjModel::~ObjModel(void)
 }
 
 void ObjModel::update(float deltaTime) {
-	position.x += 5 * deltaTime;
+	position.z -= 25 * deltaTime;
+
+	if (position.z < -300) { position.z = 0; }
 
 	//model->rotationAngleY += 45.0f * deltaTime; // 45 degrees per second on y-axis
 	//if (model->rotationAngleY > 360.0f)
 	//	model->rotationAngleY -= 360.0f;
 
-	rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
-	if (rotationAngleX > 360.0f)
-		rotationAngleX -= 360.0f;
+	//rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
+	//if (rotationAngleX > 360.0f)
+	//	rotationAngleX -= 360.0f;
 
-	//model->rotationAngleX = 280;
+	rotationAngleX = 280;
 }
 
 void ObjModel::draw() {
 	tigl::shader->enableTexture(true);
 
-    const float scale = 0.025f;
+    const float scale = 0.1f;
     glm::mat4 scaling = glm::scale(glm::mat4(1.0f), glm::vec3(scale, scale, scale));
     glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
     glm::mat4 rotationY = glm::rotate(glm::mat4(1.0f), glm::radians(rotationAngleY), glm::vec3(0.0f, 1.0f, 0.0f));

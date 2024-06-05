@@ -6,14 +6,18 @@
 
 using tigl::Vertex;
 
-Triangle::Triangle() : position(0.0f, 0.0f, 0.0f), rotationAngleY(0.0f), rotationAngleX(0.0f) { }
+Triangle::Triangle() : position(0.0f, 0.0f, -10.0f), rotationAngleY(0.0f), rotationAngleX(0.0f) { }
 
 void Triangle::update(float deltaTime) {
-    position.x -= 5 * deltaTime;
+    position.x -= 10 * deltaTime;
 
-    rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
-    if (rotationAngleX > 360.0f)
-        rotationAngleX -= 360.0f;
+    std::cout << position.x;
+
+    if (position.x < -400) { position.x = 0; }
+
+    //rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
+    //if (rotationAngleX > 360.0f)
+    //    rotationAngleX -= 360.0f;
 }
 
 void Triangle::draw() {
