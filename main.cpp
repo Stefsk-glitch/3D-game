@@ -21,9 +21,13 @@ ObjModel* model;
 
 std::list<Shape*> shapes;
 
+unsigned char* clickedPixel = new unsigned char[3]();
+int score = 0;
+
 void init();
 void update(float deltaTime);
 void draw();
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
 int main(void)
 {
@@ -66,10 +70,12 @@ void init()
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, value);
 
 	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
-		{
-			if (key == GLFW_KEY_ESCAPE)
-				glfwSetWindowShouldClose(window, true);
-		});
+	{
+		if (key == GLFW_KEY_ESCAPE)
+			glfwSetWindowShouldClose(window, true);
+	});
+
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 	camera = new cam(window);
 	
@@ -83,9 +89,21 @@ void update(float deltaTime)
 {
 	camera->update(window, deltaTime);
 
+	if ((int)clickedPixel[0] != 0 || (int)clickedPixel[1] != 0 || (int)clickedPixel[2] != 0)
+	{
+		std::cout << (int)clickedPixel[0] << " R" << std::endl;
+		std::cout << (int)clickedPixel[1] << " G" << std::endl;
+		std::cout << (int)clickedPixel[2] << " B" << std::endl;
+		std::cout << "--------------------------------" << std::endl;
+	}
+
 	for (auto &shape : shapes) {
 		shape->update(deltaTime);
 	}
+
+	clickedPixel[0] = 0;
+	clickedPixel[1] = 0;
+	clickedPixel[2] = 0;
 }
 
 void draw()
@@ -136,10 +154,10 @@ void draw()
 	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), purple));
 
 	// Drawing the circle
-	float pixelOffset = 0.01f; 
+	const float pixelOffset = 0.01f; 
 	glm::vec4 center = modelMatrix * glm::vec4(0, -1 + pixelOffset, 0, 1);
-	float radius = 5.0f; 
-	int numVertices = 20; 
+	const float radius = 5.0f; 
+	const int numVertices = 20; 
 
 	for (int i = 0; i < numVertices; ++i) {
 		float theta1 = (2.0f * glm::pi<float>() * i) / numVertices;
@@ -154,4 +172,23 @@ void draw()
 	}
 
 	tigl::end();
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+
+		// Read the pixel at the center of the screen
+		unsigned char* pixel = new unsigned char[3];
+		glReadPixels(width / 2, height / 2, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
+
+		clickedPixel[0] = pixel[0];
+		clickedPixel[1] = pixel[1];
+		clickedPixel[2] = pixel[2];
+
+		delete[] pixel;
+	}
 }
