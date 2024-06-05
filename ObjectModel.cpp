@@ -75,10 +75,6 @@ static inline std::string cleanLine(std::string line)
 	return line;
 }
 
-void ObjModel::update() {
-	std::cout << "Hello obj model" << std::endl;
-}
-
 /**
 * Loads an object model
 */
@@ -178,6 +174,20 @@ ObjModel::ObjModel(const std::string& fileName) : position(0.0f, 0.0f, 0.0f), ro
 
 ObjModel::~ObjModel(void)
 {
+}
+
+void ObjModel::update(float deltaTime) {
+	position.x += 5 * deltaTime;
+
+	//model->rotationAngleY += 45.0f * deltaTime; // 45 degrees per second on y-axis
+	//if (model->rotationAngleY > 360.0f)
+	//	model->rotationAngleY -= 360.0f;
+
+	rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
+	if (rotationAngleX > 360.0f)
+		rotationAngleX -= 360.0f;
+
+	//model->rotationAngleX = 280;
 }
 
 void ObjModel::draw() {

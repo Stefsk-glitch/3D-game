@@ -61,6 +61,6 @@ public:
 	float rotationAngleY;
 	float rotationAngleX;
 
-	virtual void update() override;
+	virtual void update(float deltaTime) override;
 	virtual void draw() override;
 };
