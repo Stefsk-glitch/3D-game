@@ -126,11 +126,9 @@ void draw()
 
 	glEnable(GL_DEPTH_TEST);
 
-	tigl::shader->enableTexture(true);
 	for (auto& shape : shapes) {
 		shape->draw();
 	}
-	tigl::shader->enableTexture(false);
 
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 20.0f, -10.0f));
