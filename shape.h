@@ -5,4 +5,5 @@ class Shape {
 		Shape();
 
 		virtual void update() {};
+		virtual void draw() {};
 };

@@ -62,5 +62,5 @@ public:
 	float rotationAngleX;
 
 	virtual void update() override;
-	void draw();
+	virtual void draw() override;
 };

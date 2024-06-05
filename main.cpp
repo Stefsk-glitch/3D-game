@@ -127,7 +127,9 @@ void draw()
 	glEnable(GL_DEPTH_TEST);
 
 	tigl::shader->enableTexture(true);
-	model->draw();
+	for (auto& shape : shapes) {
+		shape->draw();
+	}
 	tigl::shader->enableTexture(false);
 
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
