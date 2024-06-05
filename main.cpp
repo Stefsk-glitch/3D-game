@@ -133,16 +133,19 @@ void draw()
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 20.0f, -10.0f));
 
+	const glm::vec4 purple(0, 1, 1, 1);
+	const glm::vec4 cyan(1, 0, 1, 1);
+
 	tigl::begin(GL_TRIANGLES);
 
 	// Drawing the square
-	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
-	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
-	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), purple));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, 10, 1), purple));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), purple));
 
-	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
-	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, -10, 1), glm::vec4(0, 0, 1, 1)));
-	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), glm::vec4(0, 0, 1, 1)));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(-10, -1, -10, 1), purple));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, -10, 1), purple));
+	tigl::addVertex(Vertex::PC(modelMatrix * glm::vec4(10, -1, 10, 1), purple));
 
 	// Drawing the circle
 	float pixelOffset = 0.01f; 
@@ -157,9 +160,9 @@ void draw()
 		glm::vec4 p1 = center + glm::vec4(radius * cos(theta1), 0, radius * sin(theta1), 0);
 		glm::vec4 p2 = center + glm::vec4(radius * cos(theta2), 0, radius * sin(theta2), 0);
 
-		tigl::addVertex(Vertex::PC(center, glm::vec4(1, 0, 0, 1))); 
-		tigl::addVertex(Vertex::PC(p1, glm::vec4(1, 0, 0, 1))); 
-		tigl::addVertex(Vertex::PC(p2, glm::vec4(1, 0, 0, 1))); 
+		tigl::addVertex(Vertex::PC(center, cyan));
+		tigl::addVertex(Vertex::PC(p1, cyan));
+		tigl::addVertex(Vertex::PC(p2, cyan));
 	}
 
 	tigl::end();
