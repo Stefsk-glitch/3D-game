@@ -114,7 +114,6 @@ namespace tigl
 	int attributeTexcoord = 2;
 	int attributeNormal = 3;
 
-
 	// Initializes shader used
 	void init()
 	{
@@ -174,7 +173,6 @@ namespace tigl
 		glDeleteBuffers(1, &id);
 	}
 
-
 	void drawVertices(GLenum shape, VBO* vbo)
 	{
 		static Vertex tmpVertex;
@@ -190,11 +188,6 @@ namespace tigl
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 	}
-
-
-
-
-
 
 	ShaderImpl::ShaderImpl()
 	{
@@ -370,7 +363,6 @@ void main()
 
 		use();
 	}
-
 	ShaderImpl::~ShaderImpl()
 	{
 
@@ -379,7 +371,6 @@ void main()
 	{
 		glUseProgram(programId);
 	}
-
 	void ShaderImpl::addShader(int shaderProgram, GLenum shaderType, const std::string& shader)
 	{
 		GLuint shaderId = glCreateShader(shaderType);
@@ -401,14 +392,11 @@ void main()
 		}
 		glAttachShader(programId, shaderId);
 	}
-
-
 	void ShaderImpl::setProjectionMatrix(const glm::mat4& matrix)
 	{
 		this->projectionMatrix = matrix;
 		setUniform(Uniform::ProjectionMatrix, matrix);
 	}
-
 	void ShaderImpl::setViewMatrix(const glm::mat4& matrix)
 	{
 		this->viewMatrix = matrix;
@@ -416,31 +404,21 @@ void main()
 
 		glm::vec4 cameraPosition = glm::inverse(matrix) * glm::vec4(0, 0, 0, 1);
 		setUniform(Uniform::cameraPosition, glm::vec3(cameraPosition));
-
 	}
-
 	void ShaderImpl::setModelMatrix(const glm::mat4& matrix)
 	{
 		this->modelMatrix = matrix;
 		setUniform(Uniform::ModelMatrix, matrix);
 		setUniform(Uniform::NormalMatrix, glm::mat3(glm::transpose(glm::inverse(modelMatrix))));
 	}
-
-
-
-
-
-
 	void ShaderImpl::setUniform(Uniform uniform, const glm::mat4& value)
 	{
 		glUniformMatrix4fv(uniforms[uniform], 1, false, glm::value_ptr(value));
 	}
-
 	void ShaderImpl::setUniform(Uniform uniform, const glm::mat3& value)
 	{
 		glUniformMatrix3fv(uniforms[uniform], 1, false, glm::value_ptr(value));
 	}
-
 	void ShaderImpl::setUniform(Uniform uniform, const glm::vec4& value)
 	{
 		glUniform4fv(uniforms[uniform], 1, glm::value_ptr(value));
@@ -453,7 +431,6 @@ void main()
 	{
 		glUniform2fv(uniforms[uniform], 1, glm::value_ptr(value));
 	}
-
 	void ShaderImpl::setUniform(Uniform uniform, bool value)
 	{
 		glUniform1i(uniforms[uniform], value ? GL_TRUE : GL_FALSE);
@@ -466,19 +443,14 @@ void main()
 	{
 		glUniform1f(uniforms[uniform], value);
 	}
-
-
-
 	void ShaderImpl::setUniform(const std::string& uniform, const glm::mat4& value)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(programId, uniform.c_str()), 1, false, glm::value_ptr(value));
 	}
-
 	void ShaderImpl::setUniform(const std::string& uniform, const glm::mat3& value)
 	{
 		glUniformMatrix3fv(glGetUniformLocation(programId, uniform.c_str()), 1, false, glm::value_ptr(value));
 	}
-
 	void ShaderImpl::setUniform(const std::string& uniform, const glm::vec4& value)
 	{
 		glUniform4fv(glGetUniformLocation(programId, uniform.c_str()), 1, glm::value_ptr(value));
@@ -491,8 +463,6 @@ void main()
 	{
 		glUniform2fv(glGetUniformLocation(programId, uniform.c_str()), 1, glm::value_ptr(value));
 	}
-
-
 	void ShaderImpl::setUniform(const std::string& uniform, bool value)
 	{
 		glUniform1i(glGetUniformLocation(programId, uniform.c_str()), value ? GL_TRUE : GL_FALSE);
@@ -505,14 +475,8 @@ void main()
 	{
 		glUniform1f(glGetUniformLocation(programId, uniform.c_str()), value);
 	}
-
 	bool Vertex::operator==(const Vertex& other)
 	{
 		return position == other.position && normal == other.normal && color == other.color && texcoord == other.texcoord;
 	}
-
-
-
-
-
 }

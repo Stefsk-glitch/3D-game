@@ -80,6 +80,9 @@ static inline std::string cleanLine(std::string line)
 */
 ObjModel::ObjModel(const std::string& fileName) : position(0.0f, 0.0f, 0.0f), rotationAngleY(0.0f), rotationAngleX(0.0f)
 {
+	rotationAngleX = 280;
+	counter = 0; 
+	hit = false;
 	std::cout << "Loading " << fileName << std::endl;
 	std::string dirName = fileName;
 	if (dirName.rfind("/") != std::string::npos)
@@ -176,20 +179,46 @@ ObjModel::~ObjModel(void)
 {
 }
 
-void ObjModel::update(float deltaTime) {
+int ObjModel::update(float deltaTime, unsigned char* color) {
 	position.z -= 25 * deltaTime;
+
+	std::cout << (int)color[0] << " R" << std::endl;
+	std::cout << (int)color[1] << " G" << std::endl;
+	std::cout << (int)color[2] << " B" << std::endl;
+	std::cout << "--------------------------------" << std::endl;
 
 	if (position.z < -300) { position.z = 0; }
 
-	//model->rotationAngleY += 45.0f * deltaTime; // 45 degrees per second on y-axis
-	//if (model->rotationAngleY > 360.0f)
-	//	model->rotationAngleY -= 360.0f;
+	if (hit)
+	{
+		counter++;
 
-	//rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
-	//if (rotationAngleX > 360.0f)
-	//	rotationAngleX -= 360.0f;
+		if (counter == 180)
+		{
+			hit = false;
+			position.z = 0;
+			rotationAngleY = 0;
+			counter = 0;
+		}
+	}
 
-	rotationAngleX = 280;
+	if ((int)color[0] > 40 || hit)
+	{
+		rotationAngleY += 90.0f * deltaTime; // 90 degrees per second on y-axis
+		if (rotationAngleY > 360.0f)
+			rotationAngleY -= 360.0f;
+
+		if (!hit)
+		{
+			hit = true;
+			color[0] = 0;
+			color[1] = 0;
+			color[2] = 0;
+			return 10;
+		}
+	}
+
+	return 0;
 }
 
 void ObjModel::draw() {

@@ -4,6 +4,6 @@ class Shape {
 	public:
 		Shape();
 
-		virtual void update(float deltaTime) {};
+		virtual int update(float deltaTim, unsigned char* color) { return 0; };
 		virtual void draw() {};
 };

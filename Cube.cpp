@@ -6,16 +6,43 @@
 
 using tigl::Vertex;
 
-Cube::Cube() : position(0.0f, 0.0f, -10.0f), rotationAngleY(0.0f), rotationAngleX(0.0f) { }
+Cube::Cube() : position(0.0f, 0.0f, -10.0f), rotationAngleY(0.0f), rotationAngleX(0.0f) { counter = 0; hit = false; }
 
-void Cube::update(float deltaTime) {
+int Cube::update(float deltaTime, unsigned char* color) {
     position.x += 20 * deltaTime;
 
     if (position.x > 350) { position.x = 0; }
 
-    //rotationAngleX += 30.0f * deltaTime; // 30 degrees per second on x-axis
-    //if (rotationAngleX > 360.0f)
-    //    rotationAngleX -= 360.0f;
+    if (hit)
+    {
+        counter++;
+        
+        if (counter == 120)
+        {
+            hit = false;
+            position.x = 0;
+            rotationAngleY = 0;
+            counter = 0;
+        }
+    }
+
+    if ((int)color[2] > 150 || hit)
+    {
+        rotationAngleY += 90.0f * deltaTime; // 90 degrees per second on y-axis
+        if (rotationAngleY > 360.0f)
+            rotationAngleY -= 360.0f;
+
+        if (!hit)
+        {
+            hit = true;
+            color[0] = 0;
+            color[1] = 0;
+            color[2] = 0;
+            return 2;
+        }
+    }
+
+    return 0;
 }
 
 void Cube::draw() {

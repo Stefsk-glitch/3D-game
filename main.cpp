@@ -74,8 +74,10 @@ void init()
 
 	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		if (key == GLFW_KEY_ESCAPE)
-			glfwSetWindowShouldClose(window, true);
+			if (key == GLFW_KEY_ESCAPE) {
+				glfwSetWindowShouldClose(window, true);
+				std::cout << score << std::endl;
+			}
 	});
 
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
@@ -92,21 +94,10 @@ void update(float deltaTime)
 {
 	camera->update(window, deltaTime);
 
-	if ((int)clickedPixel[0] != 0 || (int)clickedPixel[1] != 0 || (int)clickedPixel[2] != 0)
-	{
-		std::cout << (int)clickedPixel[0] << " R" << std::endl;
-		std::cout << (int)clickedPixel[1] << " G" << std::endl;
-		std::cout << (int)clickedPixel[2] << " B" << std::endl;
-		std::cout << "--------------------------------" << std::endl;
-	}
-
 	for (auto &shape : shapes) {
-		shape->update(deltaTime);
+		int points = shape->update(deltaTime, clickedPixel);
+		score += points;
 	}
-
-	clickedPixel[0] = 0;
-	clickedPixel[1] = 0;
-	clickedPixel[2] = 0;
 }
 
 void draw()
@@ -132,6 +123,7 @@ void draw()
 	tigl::shader->setLightPosition(0, glm::vec3(25, 25, 25));
 	tigl::shader->setShinyness(100);
 	tigl::shader->enableFog(true);
+	tigl::shader->setFogExp(0.0025f);
 
 	glEnable(GL_DEPTH_TEST);
 

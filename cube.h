@@ -11,7 +11,9 @@ public:
 	glm::vec3 position;
 	float rotationAngleX;
 	float rotationAngleY;
+	int counter;
+	bool hit;
 
-	virtual void update(float deltaTime) override;
+	virtual int update(float deltaTime, unsigned char* color) override;
 	virtual void draw() override;
 };
