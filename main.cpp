@@ -43,6 +43,9 @@ int main(void)
 	}
 	glfwMakeContextCurrent(window);
 
+	// v sync off
+	glfwSwapInterval(0);
+
 	tigl::init();
 	init();
 
@@ -128,7 +131,7 @@ void draw()
 	tigl::shader->setLightSpecular(0, glm::vec3(1.0f, 1.0f, 1.0f));
 	tigl::shader->setLightPosition(0, glm::vec3(25, 25, 25));
 	tigl::shader->setShinyness(100);
-	tigl::shader->enableFog(false);
+	tigl::shader->enableFog(true);
 
 	glEnable(GL_DEPTH_TEST);
 
