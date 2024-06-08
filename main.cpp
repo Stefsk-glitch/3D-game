@@ -3,6 +3,7 @@
 #include "cube.h"
 #include "triangle.h"
 #include "objectModel.h"
+#include "fileIO.h"
 
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -35,26 +36,18 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 int main(void)
 {
-	try {
-		std::ifstream file;
+	FileIO* fileIO = new FileIO();
 
-		file.open("score.txt");
-
-		if (!file) {
-			throw std::ios_base::failure("File doesn't exist. You never played before");
-		}
-		
-		std::string line;
-		while (std::getline(file, line)) {
-			std::cout << "Last time you played your score was: " << std::endl;
-			std::cout << line << std::endl;
-		}
-
-		file.close();
+	std::string score;
+	int readResult = fileIO->readScoreFromFile(score);
+	if (readResult == 0) {
+		std::cout << score << std::endl;
 	}
-	catch (const std::exception& e) {
-		std::cerr << "An error occurred: " << e.what() << std::endl;
+	else {
+		std::cerr << "Failed to read score from file." << std::endl;
 	}
+
+	delete fileIO;
 
 	if (!glfwInit())
 		throw "Could not initialize glwf";
@@ -105,26 +98,17 @@ void init()
 			if (key == GLFW_KEY_ESCAPE) {
 				glfwSetWindowShouldClose(window, true);
 
-				try {
-					std::ofstream outFile("score.txt");
+				FileIO* fileIO = new FileIO();
 
-					if (!outFile) {
-						throw std::ios_base::failure("Failed to open the file.");
-					}
-
-					outFile << "Your final score: " << score << std::endl;
-
-					outFile.close();
-
-					if (outFile.fail()) {
-						throw std::ios_base::failure("Failed to close the file.");
-					}
-
-					std::cout << "File written successfully." << std::endl;
+				int writeResult = fileIO->writeScoreToFile(score);
+				if (writeResult == 0) {
+					std::cout << "Score written to file successfully." << std::endl;
 				}
-				catch (const std::exception& e) {
-					std::cerr << "Couldn't make or write to the file: " << e.what() << std::endl;
+				else {
+					std::cerr << "Failed to write score to file." << std::endl;
 				}
+
+				delete fileIO;
 			}
 	});
 
