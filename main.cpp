@@ -9,6 +9,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include<iostream>
+#include<fstream>
+#include <exception>
+
 using tigl::Vertex;
 
 #pragma comment(lib, "glfw3.lib")
@@ -31,10 +35,34 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 int main(void)
 {
+	try {
+		std::ifstream file;
+
+		file.open("score.txt");
+
+		if (!file) {
+			throw std::ios_base::failure("File doesn't exist. You never played before");
+		}
+		
+		std::string line;
+		while (std::getline(file, line)) {
+			std::cout << "Last time you played your score was: " << std::endl;
+			std::cout << line << std::endl;
+		}
+
+		file.close();
+	}
+	catch (const std::exception& e) {
+		std::cerr << "An error occurred: " << e.what() << std::endl;
+	}
+
 	if (!glfwInit())
 		throw "Could not initialize glwf";
 
-	window = glfwCreateWindow(1280, 720, "Game", NULL, NULL);
+
+	const int width = 1280;
+	const int height = 720;
+	window = glfwCreateWindow(width, height, "Game", NULL, NULL);
 
 	if (!window)
 	{
@@ -76,7 +104,27 @@ void init()
 	{
 			if (key == GLFW_KEY_ESCAPE) {
 				glfwSetWindowShouldClose(window, true);
-				std::cout << score << std::endl;
+
+				try {
+					std::ofstream outFile("score.txt");
+
+					if (!outFile) {
+						throw std::ios_base::failure("Failed to open the file.");
+					}
+
+					outFile << "Your final score: " << score << std::endl;
+
+					outFile.close();
+
+					if (outFile.fail()) {
+						throw std::ios_base::failure("Failed to close the file.");
+					}
+
+					std::cout << "File written successfully." << std::endl;
+				}
+				catch (const std::exception& e) {
+					std::cerr << "Couldn't make or write to the file: " << e.what() << std::endl;
+				}
 			}
 	});
 

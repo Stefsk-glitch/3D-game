@@ -182,14 +182,6 @@ ObjModel::~ObjModel(void)
 int ObjModel::update(float deltaTime, unsigned char* color) {
 	position.z -= 25 * deltaTime;
 
-	if ((int)color[0] != 0 && (int)color[1] != 0 && (int)color[2] != 0)
-	{
-		std::cout << (int)color[0] << " R" << std::endl;
-		std::cout << (int)color[1] << " G" << std::endl;
-		std::cout << (int)color[2] << " B" << std::endl;
-		std::cout << "--------------------------------" << std::endl;
-	}
-
 	if (position.z < -300) { position.z = 0; }
 
 	if (hit)
