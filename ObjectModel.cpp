@@ -182,10 +182,13 @@ ObjModel::~ObjModel(void)
 int ObjModel::update(float deltaTime, unsigned char* color) {
 	position.z -= 25 * deltaTime;
 
-	std::cout << (int)color[0] << " R" << std::endl;
-	std::cout << (int)color[1] << " G" << std::endl;
-	std::cout << (int)color[2] << " B" << std::endl;
-	std::cout << "--------------------------------" << std::endl;
+	if ((int)color[0] != 0 && (int)color[1] != 0 && (int)color[2] != 0)
+	{
+		std::cout << (int)color[0] << " R" << std::endl;
+		std::cout << (int)color[1] << " G" << std::endl;
+		std::cout << (int)color[2] << " B" << std::endl;
+		std::cout << "--------------------------------" << std::endl;
+	}
 
 	if (position.z < -300) { position.z = 0; }
 
@@ -202,7 +205,8 @@ int ObjModel::update(float deltaTime, unsigned char* color) {
 		}
 	}
 
-	if ((int)color[0] > 40 || hit)
+	// hit red or yellow part
+	if ((int)color[0] > 180 || (int)color[0] > 180 && (int)color[1] > 180 || hit)
 	{
 		rotationAngleY += 90.0f * deltaTime; // 90 degrees per second on y-axis
 		if (rotationAngleY > 360.0f)
